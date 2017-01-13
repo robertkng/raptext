@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Search from '../Search/Search.jsx';
 import './App.css';
 
 export default class App extends Component {
@@ -12,14 +13,14 @@ export default class App extends Component {
   }
 
   updateInput(e) {
-    this.setState = ({
-      searchTerm = e.target.value,
+    this.setState({
+      searchTerm: e.target.value,
     });
   }
 
   reset() {
     this.setState({
-      searchTerm = '',
+      searchTerm: '',
     });
   }
 
