@@ -26,7 +26,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'okc',
+      title: 'Rap Text',
       xhtml: true,
       inject: false,
       template: require('html-webpack-template'),
