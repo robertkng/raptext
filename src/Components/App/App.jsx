@@ -25,47 +25,41 @@ export default class App extends Component {
     });
   }
 
-  // searchRapper() {
-  //   const CLIENT_ID = process.env.CLIENT_ID;
-  //   const CLIENT_SECRET + process.env.CLIENT_SECRET;
-  //   const authorization = () => `Basic ${window.btoa(`${CLIENT_ID}:${CLIENT_SECRET}`)}`;
+  searchDate() {
+    // Headers
+    const X_ZUMO_AUTH = process.env.X_ZUMO_AUTH;
+    const X_ZUMO_APPLICATION = process.env.X_ZUMO_APPLICATION;
+    const ContentType = "application/json; charset=utf-8";
 
-  //   const authParameters = {
-  //     headers: {
-  //       Authorization: authorization(),
-  //     },
-  //   };
-  //   const RAPCHAT_API_ENDPOINT = `https://apidev.rapchat.me=${this.state.searchTerm}`;
-  //   fetch(RAPCHAT_API_ENDPOINT, authParameters)
-  //   .then(r => r.json())
-  //   .then((result) => {
-  //     this.setState({
-  //       image: result.data[0].assets.preview_mp4.url,
-  //       searchTerm: '',
-  //     });
-  //     this.reset();
-  //   });
-  // }
+    // URL
+    const APP_URL = process.env.APP_URL;
 
-  searchRapper() {
-    fetch(`https://apidev.rapchat.me=${this.state.searchTerm}`, {
+    // Body
+    const USER_ID = process.env.USER_ID;
+
+    const authorization = () => `Basic ${window.btoa(`${X-ZUMO-AUTH}:${X-ZUMO-APPLICATION}`)}`;
+
+    const authParameters = {
       headers: {
-      'Content-Type': 'application/json'
+        Authorization: authorization(),
+        'Content-Type': 'application/json; charset=utf-8',
       },
-      method: 'GET',
-      body: JSON.stringify(this.state.result)
-      })
+        body: JSON.stringify({ 'USER_ID': USER_ID })
+    };
+
+    // const MobileServiceClient = WindowsAzure.MobileServiceClient;
+    // const client = new MobileServiceClient('AppUrl', 'AppKey');
+
+    const PROFILE_ENDPOINT = `${APP_URL}/search?query=${this.state.searchTerm}`;
+    fetch(PROFILE_ENDPOINT, authParameters)
     .then(r => r.json())
-    .then((found) => {
+    .then((result) => {
       this.setState({
-        result: found
+        searchTerm: '',
       });
-    })
-    .catch(err => console.log(err));
+      this.reset();
+    });
   }
-
-
-  // }
 
   render() {
     return (
