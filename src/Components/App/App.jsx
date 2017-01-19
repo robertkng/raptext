@@ -36,7 +36,7 @@ export default class App extends Component {
     // URL
     const APP_URL = process.env.APP_URL;
 
-    const authorization = () => `Basic ${window.btoa(`${X-ZUMO-AUTH}:${X-ZUMO-APPLICATION}`)}`;
+    const authorization = () => `Basic ${window.btoa(`${X_ZUMO_AUTH}:${X_ZUMO_APPLICATION}`)}`;
 
     const authParameters = {
       method: 'POST',
@@ -57,8 +57,22 @@ export default class App extends Component {
   }
 
   pullDates(){
+    const X_ZUMO_AUTH = process.env.X_ZUMO_AUTH;
+    const X_ZUMO_APPLICATION = process.env.X_ZUMO_APPLICATION;
+
+    // URL
     const APP_URL = process.env.APP_URL;
-    fetch(APP_URL)
+
+    const authorization = () => `Basic ${window.btoa(`${X_ZUMO_AUTH}:${X_ZUMO_APPLICATION}`)}`;
+
+    const authParameters = {
+      method: 'GET',
+      headers: {
+        Authorization: authorization(),
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+    };
+    fetch(APP_URL, authParameters)
     .then(r => r.json())
     .then((data) => {
       console.log('print', data)
