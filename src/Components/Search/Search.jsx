@@ -12,7 +12,7 @@ class Search extends Component {
           onChange={this.props.updateInput}
           onKeyDown={this.props.hitEnter}
         />
-        <button onClick={this.props.search}>LOOK UP YOUR FAVORITE RAPPER</button>
+        <button onClick={this.props.pullDates}>Extract Dates</button>
       </div>
     );
   }

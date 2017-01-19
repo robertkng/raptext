@@ -29,36 +29,44 @@ export default class App extends Component {
     // Headers
     const X_ZUMO_AUTH = process.env.X_ZUMO_AUTH;
     const X_ZUMO_APPLICATION = process.env.X_ZUMO_APPLICATION;
-    const ContentType = "application/json; charset=utf-8";
-
-    // URL
-    const APP_URL = process.env.APP_URL;
 
     // Body
     const USER_ID = process.env.USER_ID;
 
+    // URL
+    const APP_URL = process.env.APP_URL;
+
     const authorization = () => `Basic ${window.btoa(`${X-ZUMO-AUTH}:${X-ZUMO-APPLICATION}`)}`;
 
     const authParameters = {
+      method: 'POST',
       headers: {
         Authorization: authorization(),
         'Content-Type': 'application/json; charset=utf-8',
       },
         body: JSON.stringify({ 'USER_ID': USER_ID })
     };
-
-    // const MobileServiceClient = WindowsAzure.MobileServiceClient;
-    // const client = new MobileServiceClient('AppUrl', 'AppKey');
-
-    const PROFILE_ENDPOINT = `${APP_URL}/search?query=${this.state.searchTerm}`;
-    fetch(PROFILE_ENDPOINT, authParameters)
+    fetch(APP_URL, authParameters)
     .then(r => r.json())
     .then((result) => {
       this.setState({
-        searchTerm: '',
-      });
-      this.reset();
-    });
+        dates: result,
+      })
+    })
+    .catch(err => console.log(err))
+  }
+
+  pullDates(){
+    const APP_URL = process.env.APP_URL;
+    fetch(APP_URL)
+    .then(r => r.json())
+    .then((data) => {
+      console.log('print', data)
+      this.setState({
+        multipleDates: data
+      })
+    })
+    .catch(err => console.log(err))
   }
 
   render() {
@@ -66,7 +74,7 @@ export default class App extends Component {
       <div id ="search">
       <h1>Rap Text</h1>
         <Search
-          searchTerm={this.state.searchTerm}
+          pullDates={this.pullDates.bind(this)}
           updateInput={this.updateInput.bind(this)}
         />
       </div>
